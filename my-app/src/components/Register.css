@@ -1,0 +1,107 @@
+body {
+
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../loginImg/loginimage.jpg");
+    background-size:cover;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+
+}
+.register-header {
+
+    font-family: 'Homemade Apple', cursive;
+    font-size:60px;
+
+}
+.register {
+
+    border:1px solid #e20074;
+    width:25%;
+    margin-top:10%;
+    margin-left:12.5%;
+    background-color:rgba(0,0,0,0.6);
+    border-radius:8px;
+}
+.form-div {
+
+    margin:25px 25px 0px 25px;
+    font-size:28px;
+
+}
+.register-textbx {
+
+    height:30px;
+    border-radius:8px;
+    padding-top:-5px;
+    font-size:16px;
+    padding-left:5px;
+    font-family: 'Roboto', sans-serif;
+    border-style:none;
+
+}
+.register-textbx::placeholder {
+
+    font-family: 'Roboto', sans-serif;
+    opacity:0.75;
+    font-size:16px;
+
+}
+.register-btn {
+
+    width:125px;
+    height:50px;
+    font-size:18px;
+    border-radius:8px;
+    margin-top:25px;
+    border:7px #e20074 solid;
+    background-color:rgba(0,0,0,0);
+    color: #e20074;
+    margin-bottom:20px;
+    cursor:pointer;
+    transition:0.2s;
+
+}
+.register-btn:disabled {
+
+    width:125px;
+    height:50px;
+    font-size:18px;
+    border-radius:8px;
+    margin-top:25px;
+    border:7px rgba(226,0,116,0.3) solid;
+    background-color:rgba(0,0,0,0);
+    color: rgba(226,0,116,0.3);
+    margin-bottom:20px;
+    
+
+}
+.register-btn:hover {
+
+    color:white;
+    background-color: #e20074;
+    
+
+}
+.register-btn:disabled:hover {
+
+    color:rgba(226,0,116,0.3);
+    background-color: rgba(0,0,0,0);
+
+}
+.form-errors {
+
+    color:red;
+
+}
+.login-link {
+
+    text-decoration: none;
+    color: #e20074;
+
+}
+.no-account {
+
+    margin-bottom:10px;
+    margin-top:15px;
+
+}
+
