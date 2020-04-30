@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axiosWithAuth from "./utils/AxiosWithAuth";
 import { useParams, useHistory } from "react-router-dom";
-import './RecipesList.css'
+import "./RecipesList.css";
 
 const initialRecipe = {
   id: "",
@@ -17,7 +17,6 @@ const initialRecipe = {
 const RecipesList = (props) => {
   const [editing, setEditing] = useState(false);
   const [recipeToEdit, setRecipeToEdit] = useState(initialRecipe);
-  const [newRecipe, setNewRecipe] = useState({});
   const { recipes } = props;
 
   const { push } = useHistory();
@@ -27,86 +26,132 @@ const RecipesList = (props) => {
     window.location.reload();
   };
 
+  console.log(recipes, "recipes props data");
 
-console.log(recipes, 'recipes props data')
- 
   const editRecipe = (recipe) => {
     setEditing(true);
-    
-    const edit = recipes.find((updatedRecipe)=>updatedRecipe.recipe_id=== recipe.recipe_id)
+
+    const edit = recipes.find(
+      (updatedRecipe) => updatedRecipe.recipe_id === recipe.recipe_id
+    );
     setRecipeToEdit(edit);
-    console.log(edit, 'edit variable');
   };
 
-
   const saveEdit = (e) => {
-    const newRecipe={
+    const newRecipe = {
       title: recipeToEdit.title,
       source: recipeToEdit.source,
       ingredients: recipeToEdit.ingredients,
       instructions: recipeToEdit.instructions,
       category: recipeToEdit.category,
-    }
+    };
     e.preventDefault();
-    // console.log(recipeToEdit, 'recipe to edit data')
+
     axiosWithAuth()
       .put(`/${id}/recipe/${recipeToEdit.recipe_id}`, newRecipe)
-      .then(res => {
-        console.log(res, 'edit data returned')
+      .then((res) => {
         setEditing(false);
-        push(`/${id}/recipe/`)
+        push(`/${id}/recipe/`);
         reloadPage();
       })
-      .catch(err=>console.log(err, 'edited recipe failed to return', recipeToEdit.recipe_id))
+      .catch((err) =>
+        console.log(
+          err,
+          "edited recipe failed to return",
+          recipeToEdit.recipe_id
+        )
+      );
   };
 
   const deleteRecipe = (recipe) => {
-    axiosWithAuth() //unsure about endpoint for mapping through data
+    axiosWithAuth()
       .delete(`/${id}/recipe/${recipe.recipe_id}`, recipe)
-      .then(res => {
-        console.log("recipe has been returned", res)
-        
-      reloadPage(); 
-    })
-    
+      .then((res) => {
+        console.log("recipe has been returned", res);
+
+        reloadPage();
+        alert(`${recipe.title} recipe has been deleted!`);
+      })
+
       .catch((err) => console.log(err, "sorry, recipe could not be returned"));
   };
 
-
-  const editOnChange = e =>{
+  const editOnChange = (e) => {
     setRecipeToEdit({
       ...recipeToEdit,
-     [e.target.name]:e.target.value
-    })
-  }
-
-  const onChange = 
-    (e) =>{
-      const recipeValue = e.target.value
-                setNewRecipe({
-                  ...newRecipe,
-                 [e.target.name]:recipeValue
-                })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <div>
-      {recipes.map((recipe) => (
-        <div key={recipe.id}>
-          <h3>{recipe.title}</h3>
-          <p>{recipe.category}</p>
-          <p>{recipe.ingredients}</p>
-          <p>{recipe.instructions}</p>
-          <p>{recipe.source}</p>
+      <div className="editForm">
+        {editing && (
+          <form onSubmit={saveEdit}>
+            <h3 className="edit-title">Edit Recipe </h3>
+            <input
+              name="title"
+              placeholder="title"
+              value={recipeToEdit.title}
+              onChange={editOnChange}
+            />
 
-          <button className='btn'
+            <input
+              onChange={editOnChange}
+              name="source"
+              placeholder="source"
+              value={recipeToEdit.source}
+            />
+
+            <textarea
+              onChange={editOnChange}
+              name="ingredients"
+              placeholder="ingredients"
+              value={recipeToEdit.ingredients}
+            />
+
+            <textarea
+              onChange={editOnChange}
+              name="instructions"
+              placeholder="instructions"
+              value={recipeToEdit.instructions}
+            />
+
+            <input
+              onChange={editOnChange}
+              name="category"
+              placeholder="category"
+              value={recipeToEdit.category}
+            />
+            <div>
+              <button className="btn" type="submit">
+                save
+              </button>
+              <button className="btn" onClick={() => setEditing(false)}>
+                cancel
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+      {recipes.map((recipe) => (
+        <div className="recipelist" key={recipe.id}>
+          <h2>{recipe.title}</h2>
+          <p>Categorty: {recipe.category}</p>
+          <p>Ingredients: {recipe.ingredients}</p>
+          <p>Instructions: {recipe.instructions}</p>
+          <p>Source: {recipe.source}</p>
+
+          <button
+            className="x-btn"
             onClick={() => {
               deleteRecipe(recipe);
             }}
           >
-            Delete
+            <i class="fa fa-trash"> Delete</i>
           </button>
-          <button className='btn'
+          <button
+            className="btn"
             onClick={() => {
               editRecipe(recipe);
             }}
@@ -115,52 +160,8 @@ console.log(recipes, 'recipes props data')
           </button>
         </div>
       ))}
-      <div className="editForm">
-        {editing && (
-          <form onSubmit ={saveEdit}>
-            <h3 className="edit-title">Edit Recipe </h3>
-            <input
-              name ="title"
-              placeholder ="title"
-              value={recipeToEdit.title}
-              onChange ={editOnChange}
-            />
-
-            <input
-              onChange={editOnChange}
-              name="source"
-              placeholder ="source"
-              value={recipeToEdit.source}
-            />
-
-            <input
-              onChange={editOnChange}
-              name ="ingredients"
-              placeholder ="ingredients"
-              value={recipeToEdit.ingredients}
-            />
-
-            <input
-              onChange={editOnChange}
-              name ="instructions"
-              placeholder ="instructions"
-              value={recipeToEdit.instructions}
-            />
-
-            <input
-               onChange={editOnChange}
-               name ="category"
-               placeholder ="category"
-               value={recipeToEdit.category}
-            />
-            <button className='btn'
-            type="submit">save</button>
-            <button className='btn' onClick={() => setEditing(false)}>cancel</button>
-          </form>
-        )}
-      </div>
     </div>
   );
-        };
+};
 
 export default RecipesList;

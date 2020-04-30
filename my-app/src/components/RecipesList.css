@@ -1,5 +1,13 @@
 .btn {
+  color: black;
+}
 
-    color:black;
-
+.add-recipe {
+  background-color: rgba(28, 157, 218, 0.548);
+  width: 400px;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  margin-top: 10px;
 }
