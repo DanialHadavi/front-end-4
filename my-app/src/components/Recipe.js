@@ -24,7 +24,7 @@ const Recipe = () => {
   return (
     <div>
       <h1>Welcome to Secret Family Recipes!</h1>
-    <h2>Testing</h2>
+    <h2>Testing123</h2>
       <SearchBar recipes={recipeList} setRecipeList={setRecipeList}/>
       <AddRecipe/>
       <RecipesList recipes={recipeList} />
